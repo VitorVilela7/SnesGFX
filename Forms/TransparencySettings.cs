@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace SnesGFX.Forms
 {
-    public partial class Form3 : Form
+    public partial class TransparencySettings : Form
     {
-        public Form3()
+        public TransparencySettings()
         {
             InitializeComponent();
             setColor(Program.customTransparent);

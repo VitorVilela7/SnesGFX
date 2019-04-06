@@ -9,7 +9,7 @@ using System.Drawing.Imaging;
 
 namespace SnesGFX.Forms
 {
-    public partial class Form5 : Form
+    public partial class ColorSortManual : Form
     {
         /// <summary>
         /// likely to have 256 entries.
@@ -23,7 +23,7 @@ namespace SnesGFX.Forms
 
         public bool cancelled = true;
 
-        public Form5(Color[] tbl)
+        public ColorSortManual(Color[] tbl)
         {
             InitializeComponent();
             this.table = new Color[256];

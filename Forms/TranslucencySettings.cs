@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace SnesGFX.Forms
 {
-    public partial class Form6 : Form
+    public partial class TranslucencySettings : Form
     {
-        public Form6()
+        public TranslucencySettings()
         {
             InitializeComponent();
         }

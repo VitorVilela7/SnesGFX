@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace SnesGFX.Forms
 {
-    public partial class Form4 : Form
+    public partial class ColorSortSettings : Form
     {
-        public Form4()
+        public ColorSortSettings()
         {
             InitializeComponent();
 

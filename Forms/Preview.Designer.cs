@@ -1,6 +1,6 @@
 ﻿namespace SnesGFX.Forms
 {
-    partial class Form2
+    partial class Preview
     {
         /// <summary>
         /// Required designer variable.

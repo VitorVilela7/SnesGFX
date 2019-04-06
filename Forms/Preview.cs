@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace SnesGFX.Forms
 {
-    public partial class Form2 : Form
+    public partial class Preview : Form
     {
         private Bitmap bitmap;
 
@@ -22,7 +22,7 @@ namespace SnesGFX.Forms
             }
         }
 
-        public Form2(Bitmap bitmap, Size size)
+        public Preview(Bitmap bitmap, Size size)
         {
             InitializeComponent();
             this.bitmap = bitmap;

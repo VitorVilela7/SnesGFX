@@ -1,6 +1,6 @@
 ﻿namespace SnesGFX.Forms
 {
-    partial class Form4
+    partial class ColorSortSettings
     {
         /// <summary>
         /// Required designer variable.

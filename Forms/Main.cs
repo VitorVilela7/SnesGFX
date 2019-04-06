@@ -660,14 +660,14 @@ Ratio:					{2:F}%";
 
 						if (Program.view == null)
 						{
-							Program.view = new Form2(graphics, new Size(256, 256));
+							Program.view = new Preview(graphics, new Size(256, 256));
 							Program.view.Owner = this;
 							Program.view.Show();
 						}
 
 						else if (Program.view.IsDisposed)
 						{
-							Program.view = new Form2(graphics, new Size(256, 256));
+							Program.view = new Preview(graphics, new Size(256, 256));
 							Program.view.Owner = this;
 							Program.view.Show();
 						}
@@ -1046,21 +1046,21 @@ Ratio:					{2:F}%";
             button4.Enabled = Options.AllowTransparency = checkBox7.Checked;
         }
 
-        Form3 opac;
-        Form4 csettings;
-		Form6 cgadsub;
+        TransparencySettings opac;
+        ColorSortSettings csettings;
+		TranslucencySettings cgadsub;
 
         private void button4_Click(object sender, EventArgs e)
         {
             if (opac == null)
             {
-                opac = new Form3();
+                opac = new TransparencySettings();
                 opac.Owner = this;
                 opac.Show();
             }
             else if (opac.IsDisposed)
             {
-                opac = new Form3();
+                opac = new TransparencySettings();
                 opac.Owner = this;
                 opac.Show();
             }
@@ -1074,13 +1074,13 @@ Ratio:					{2:F}%";
         {
             if (csettings == null)
             {
-                csettings = new Form4();
+                csettings = new ColorSortSettings();
                 csettings.Owner = this;
                 csettings.Show();
             }
             else if (csettings.IsDisposed)
             {
-                csettings = new Form4();
+                csettings = new ColorSortSettings();
                 csettings.Owner = this;
                 csettings.Show();
             }
@@ -1104,13 +1104,13 @@ Ratio:					{2:F}%";
 		{
 			if (cgadsub == null)
 			{
-				cgadsub = new Form6();
+				cgadsub = new TranslucencySettings();
 				cgadsub.Owner = this;
 				cgadsub.Show();
 			}
 			else if (cgadsub.IsDisposed)
 			{
-				cgadsub = new Form6();
+				cgadsub = new TranslucencySettings();
 				cgadsub.Owner = this;
 				cgadsub.Show();
 			}

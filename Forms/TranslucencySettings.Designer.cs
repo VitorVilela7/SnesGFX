@@ -1,6 +1,6 @@
 ﻿namespace SnesGFX.Forms
 {
-    partial class Form6
+    partial class TranslucencySettings
     {
         /// <summary>
         /// Required designer variable.
