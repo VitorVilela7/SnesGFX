@@ -1,4 +1,4 @@
-﻿namespace SnesGFX
+﻿namespace SnesGFX.Forms
 {
     partial class Form2
     {

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace SnesGFX
+namespace SnesGFX.Forms
 {
     /// <summary>
     /// Classe do Form principal

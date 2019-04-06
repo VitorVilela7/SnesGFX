@@ -18,7 +18,7 @@ namespace SnesGFX
     {
         public static readonly Color transparent = Color.FromArgb(0, 0, 0, 0);
 
-        public static Form2 view;
+        public static Forms.Form2 view;
         public static Size bitmapInfo;
         public static RegexOptions ropts = RegexOptions.ECMAScript |
             RegexOptions.IgnoreCase | RegexOptions.Compiled;
@@ -44,7 +44,7 @@ namespace SnesGFX
             SnesGFX.Init();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main());
+            Application.Run(new Forms.Main());
         }
 
         /// <summary>
@@ -707,7 +707,7 @@ namespace SnesGFX
                     palette_list.Sort(SortColorsBySaturation);
                     break;
                 case 3:
-                    Form5 form = new Form5(palette_list.ToArray());
+                    Forms.Form5 form = new Forms.Form5(palette_list.ToArray());
                     form.ShowDialog();
                     if (form.cancelled)
                     {

@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace SnesGFX
+namespace SnesGFX.Forms
 {
     public partial class Form2 : Form
     {

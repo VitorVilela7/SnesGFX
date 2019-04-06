@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace SnesGFX
+namespace SnesGFX.Forms
 {
     public partial class Form4 : Form
     {
