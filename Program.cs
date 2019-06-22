@@ -69,16 +69,7 @@ namespace SnesGFX
                 return false;
             }
         }
-
-        /// <summary>
-        /// Exists the app.
-        /// </summary>
-        /// <param name="p">exit code</param>
-        private static void Exit(int p)
-        {
-            Environment.Exit(p);
-        }
-
+        
         /// <summary>
         /// Converts a bitmap to 24-bit Rgb
         /// </summary>
@@ -1025,25 +1016,6 @@ namespace SnesGFX
             }
 
             return bmPhoto;
-        }
-
-        /// <summary>
-        /// Reset the Palette of a Indexed Bitmap
-        /// </summary>
-        /// <param name="bmp">The Indexed Bitmap</param>
-        /// <param name="Palette">The new Palette</param>
-        /// <returns>The new Bitmap</returns>
-        public static Bitmap Redraw(Bitmap bmp, Color[] Palette)
-        {
-            ColorPalette pal = bmp.Palette;
-            int x = 0;
-            int y = Palette.Length;
-            while (x < y)
-            {
-                pal.Entries[x] = Palette[x++];
-            }
-            bmp.Palette = pal;
-            return bmp;
         }
     }
 }
