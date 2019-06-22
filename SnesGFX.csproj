@@ -116,6 +116,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Codec\Palette.cs" />
+    <Compile Include="Codec\PaletteFormat\TileLayerPro.cs" />
     <Compile Include="Forms\TranslucencySettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,6 +153,7 @@
     <Compile Include="NewCode\Packed.cs" />
     <Compile Include="NewCode\SNES.cs" />
     <Compile Include="NewCode\SnesGFX.cs" />
+    <Compile Include="NewCode\Tile.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
