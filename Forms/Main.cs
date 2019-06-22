@@ -131,9 +131,7 @@ namespace SnesGFX.Forms
 					}
 
 					double scale = (!checkBox3.Checked) ? 1 : (Int32.Parse(textBox2.Text) / 100D);
-
-					PAR(ref b);
-
+                    
 					byte[] result;
 					byte[] palette;
 					Color[] memPalette;
@@ -696,27 +694,6 @@ Ratio:					{2:F}%";
 			InteragirFlag = false;
 
 			File.WriteAllText("convertlog.txt", report.ToString());
-		}
-
-		private void PAR(ref Bitmap b)
-		{
-			var output = new Bitmap(b.Width, b.Height, PixelFormat.Format24bppRgb);
-
-			using (Graphics g = Graphics.FromImage(output))
-			{
-				g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-				g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-				g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-
-				float ratio = 16 / 15f * 3 / 4f;
-
-				var dest = new RectangleF((b.Width - b.Width * ratio) / 2f, 0, b.Width * ratio, b.Height);
-				var src = new RectangleF(0, 0, b.Width, b.Height);
-
-				g.DrawImage(b, dest, src, GraphicsUnit.Pixel);
-			}
-
-			b = output;
 		}
 
 		/// <summary>
