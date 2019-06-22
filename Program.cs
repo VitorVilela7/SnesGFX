@@ -932,9 +932,9 @@ namespace SnesGFX
                 for (int x = 0; x < 256; x++)
                 {
                     output[x] = Color.FromArgb(
-                        (int)(_buffer[(x * 3) + (pal * 16 * 3)]),
-                        (int)(_buffer[(x * 3) + 1 + (pal * 16 * 3)]),
-                        (int)(_buffer[(x * 3) + 2 + (pal * 16 * 3)]));
+                        _buffer[(x * 3) + (pal * 16 * 3)],
+                        _buffer[(x * 3) + 1 + (pal * 16 * 3)],
+                        _buffer[(x * 3) + 2 + (pal * 16 * 3)]);
                 }
             }
             else
@@ -942,9 +942,9 @@ namespace SnesGFX
                 for (int x = 0; x < 16; x++)
                 {
                     output[x] = Color.FromArgb(
-                        (int)(_buffer[(x * 3) + (pal * 16 * 3)]),
-                        (int)(_buffer[(x * 3) + 1 + (pal * 16 * 3)]),
-                        (int)(_buffer[(x * 3) + 2 + (pal * 16 * 3)]));
+                        _buffer[(x * 3) + (pal * 16 * 3)],
+                        _buffer[(x * 3) + 1 + (pal * 16 * 3)],
+                        _buffer[(x * 3) + 2 + (pal * 16 * 3)]);
                 }
             }
             return output;
@@ -969,8 +969,8 @@ namespace SnesGFX
             float nPercentW = 0;
             float nPercentH = 0;
 
-            nPercentW = ((float)size.Width / (float)sourceWidth);
-            nPercentH = ((float)size.Height / (float)sourceHeight);
+            nPercentW = (size.Width / (float)sourceWidth);
+            nPercentH = (size.Height / (float)sourceHeight);
             if (nPercentH < nPercentW)
             {
                 nPercent = nPercentH;
