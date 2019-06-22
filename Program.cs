@@ -394,9 +394,9 @@ namespace SnesGFX
         public static void StartProcess(String name, String arguments)
         {
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo(name);
-            startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.Arguments = arguments;
-            System.Diagnostics.Process p = System.Diagnostics.Process.Start(startInfo);
+            System.Diagnostics.Process p = Process.Start(startInfo);
             p.WaitForExit();
         }
 
@@ -558,7 +558,7 @@ namespace SnesGFX
                                 SnesBitChannel(ptr[x * 3 + 2]),
                                 SnesBitChannel(ptr[x * 3 + 1]),
                                 SnesBitChannel(ptr[x * 3]));
-                            var position = System.Array.IndexOf(newPalette, temp);
+                            var position = Array.IndexOf(newPalette, temp);
 
                             if (position == -1)
                             {
@@ -974,13 +974,13 @@ namespace SnesGFX
             if (nPercentH < nPercentW)
             {
                 nPercent = nPercentH;
-                destX = System.Convert.ToInt16((size.Width -
+                destX = Convert.ToInt16((size.Width -
                               (sourceWidth * nPercent)) / 2);
             }
             else
             {
                 nPercent = nPercentW;
-                destY = System.Convert.ToInt16((size.Height -
+                destY = Convert.ToInt16((size.Height -
                               (sourceHeight * nPercent)) / 2);
             }
 
