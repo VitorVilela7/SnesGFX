@@ -5,77 +5,59 @@ namespace SnesGFX.SNES
 {
     static class Generic
     {
-        public static byte[] linearToBlocks(byte[] input, int width)
+        public static byte[] linearToBlocks(byte[] input, int width, int tileWidth)
         {
             int size = input.Length;
 
             byte[] output = new byte[size];
-            int a8x8 = (size / 64);
+            int blockSize = tileWidth * tileWidth;
+            int a8x8 = size / blockSize;
             int x = 0, y = 0, i = 0;
 
             int r = 0;
 
             do
             {
-                i = ((i % width) == 0 && (i > 0)) ? i + (width * 7) : i;
+                i = ((i % width) == 0 && (i > 0)) ? i + (width * (tileWidth - 1)) : i;
                 y = 0;
                 do
                 {
-                    r = i + (y & 7) + (width * (y >> 3));
+                    r = i + (y & (tileWidth - 1)) + (width * (y / tileWidth));
                     if (r >= size) continue;
 
-                    output[x * 64 + y] = input[r];
-
-                    //output[x * 64 + y] = input[i + ((y < 8) ? y :
-                    //    (y < 16) ? width + y - 8 :
-                    //    (y < 24) ? width * 2 + y - 16 :
-                    //    (y < 32) ? width * 3 + y - 24 :
-                    //    (y < 40) ? width * 4 + y - 32 :
-                    //    (y < 48) ? width * 5 + y - 40 :
-                    //    (y < 56) ? width * 6 + y - 48 :
-                    //    (y < 64) ? width * 7 + y - 56 : 0)];
-                } while (++y < 64);
-                i += 8;
+                    output[x * blockSize + y] = input[r];
+                } while (++y < blockSize);
+                i += tileWidth;
             } while (++x < a8x8);
 
             input = null;
             return output;
         }
 
-        public static byte[] blocksToLinear(byte[] input, int width)
+        public static byte[] blocksToLinear(byte[] input, int width, int tileWidth)
         {
             int size = input.Length;
 
             byte[] output = new byte[size];
-            int a8x8 = (size / 64);
+            int blockSize = tileWidth * tileWidth;
+            int a8x8 = size / blockSize;
             int x = 0, y = 0, i = 0;
 
             int r = 0;
 
             do
             {
-                i = ((i % width) == 0 && (i > 0)) ? i + (width * 7) : i;
+                i = ((i % width) == 0 && (i > 0)) ? i + (width * (tileWidth - 1)) : i;
 
                 y = 0;
                 do
                 {
-                    //output[i + (
-                    //    (y < 8) ? y :
-                    //    (y < 16) ? (width) + y - 8 :
-                    //    (y < 24) ? (width * 2) + y - 16 :
-                    //    (y < 32) ? (width * 3) + y - 24 :
-                    //    (y < 40) ? (width * 4) + y - 32 :
-                    //    (y < 48) ? (width * 5) + y - 40 :
-                    //    (y < 56) ? (width * 6) + y - 48 :
-                    //    (y < 64) ? (width * 7) + y - 56 : 0)]
-                    //    = input[x * 64 + y];
-
-                    r = i + (y & 7) + (width * (y >> 3));
+                    r = i + (y & (blockSize - 1)) + (width * (y / tileWidth));
                     if (r >= size) continue;
 
-                    output[r] = input[x * 64 + y];
-                } while (++y < 64);
-                i += 8;
+                    output[r] = input[x * blockSize + y];
+                } while (++y < blockSize);
+                i += blockSize;
             } while (++x < a8x8);
 
             return output;
@@ -93,12 +75,12 @@ namespace SnesGFX.SNES
 
         public byte[] Encode(byte[] input)
         {
-            return Generic.linearToBlocks(input, 128);
+            return Generic.linearToBlocks(input, 128, 8);
         }
 
         public byte[] Decode(byte[] input)
         {
-            return Generic.blocksToLinear(input, 128);
+            return Generic.blocksToLinear(input, 128, 8);
         }
     }
 
@@ -113,7 +95,7 @@ namespace SnesGFX.SNES
 
         public byte[] Encode(byte[] bitmap)
         {
-            return _encode(Generic.linearToBlocks(bitmap, 128));
+            return _encode(Generic.linearToBlocks(bitmap, 128, 8));
         }
 
         private byte[] _encode(byte[] input)
@@ -164,7 +146,7 @@ namespace SnesGFX.SNES
 
         public byte[] Decode(byte[] data)
         {
-            return Generic.blocksToLinear(_decode(data), 128);
+            return Generic.blocksToLinear(_decode(data), 128, 8);
         }
 
         public byte[] _decode(byte[] input)
@@ -214,7 +196,7 @@ namespace SnesGFX.SNES
         
         public byte[] Encode(byte[] bitmap)
         {
-            return _encode(Generic.linearToBlocks(bitmap, 128));
+            return _encode(Generic.linearToBlocks(bitmap, 128, 8));
         }
 
         private byte[] _encode(byte[] input)
@@ -278,7 +260,7 @@ namespace SnesGFX.SNES
 
         public byte[] Decode(byte[] data)
         {
-            return Generic.blocksToLinear(_decode(data), 128);
+            return Generic.blocksToLinear(_decode(data), 128, 8);
         }
 
         public byte[] _decode(byte[] input)
@@ -332,7 +314,7 @@ namespace SnesGFX.SNES
 
         public byte[] Encode(byte[] bitmap)
         {
-            return _encode(Generic.linearToBlocks(bitmap, 128));
+            return _encode(Generic.linearToBlocks(bitmap, 128, 8));
         }
 
         private byte[] _encode(byte[] input)
@@ -404,7 +386,7 @@ namespace SnesGFX.SNES
 
         public byte[] Decode(byte[] data)
         {
-            return Generic.blocksToLinear(_decode(data), 128);
+            return Generic.blocksToLinear(_decode(data), 128, 8);
         }
 
         public byte[] _decode(byte[] input)
@@ -456,7 +438,7 @@ namespace SnesGFX.SNES
 
         public byte[] Encode(byte[] bitmap)
         {
-            return _encode(Generic.linearToBlocks(bitmap, 128));
+            return _encode(Generic.linearToBlocks(bitmap, 128, 8));
         }
 
         private byte[] _encode(byte[] input)
@@ -564,7 +546,7 @@ namespace SnesGFX.SNES
 
         public byte[] Decode(byte[] data)
         {
-            return Generic.blocksToLinear(_decode(data), 128);
+            return Generic.blocksToLinear(_decode(data), 128, 8);
         }
 
         public byte[] _decode(byte[] input)

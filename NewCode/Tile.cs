@@ -6,67 +6,76 @@ namespace SnesGFX.SNES
     class Tile
     {
         /// <summary>
+        /// Size of tile in pixels.
+        /// </summary>
+        public int Size { get; private set; }
+
+        /// <summary>
         /// Gets the pixel data of 8x8 block.
         /// </summary>
         public byte[] TileData { get; }
 
-        public Tile(byte[] block)
+        public Tile(byte[] block, int size)
         {
-            this.TileData = new byte[64];
-            Array.Copy(block, TileData, 64);
+            Size = size;
+            TileData = new byte[size * size];
+            Array.Copy(block, TileData, TileData.Length);
         }
 
         public static Tile FlipX(Tile tile)
         {
-            byte[] output = new byte[64];
-            for (int y = 0; y < 8; ++y)
+            byte[] output = new byte[tile.TileData.Length];
+            for (int y = 0; y < tile.Size; ++y)
             {
-                for (int x = 0; x < 8; ++x)
+                for (int x = 0; x < tile.Size; ++x)
                 {
-                    output[(y << 3) + (x ^ 7)] = tile.TileData[(y << 3) + x];
+                    output[y * tile.Size + (x ^ (tile.Size - 1))] = tile.TileData[y * tile.Size + x];
                 }
             }
-            return new Tile(output);
+            return new Tile(output, tile.Size);
         }
         public static Tile FlipY(Tile tile)
         {
-            byte[] output = new byte[64];
-            for (int y = 0; y < 8; ++y)
+            byte[] output = new byte[tile.TileData.Length];
+            for (int y = 0; y < tile.Size; ++y)
             {
-                for (int x = 0; x < 8; ++x)
+                for (int x = 0; x < tile.Size; ++x)
                 {
-                    output[((y ^ 7) << 3) + x] = tile.TileData[(y << 3) + x];
+                    output[(y ^ (tile.Size - 1)) * tile.Size + x] = tile.TileData[y * tile.Size + x];
                 }
             }
-            return new Tile(output);
+            return new Tile(output, tile.Size);
         }
         public static Tile FlipXY(Tile tile)
         {
-            byte[] output = new byte[64];
-            for (int y = 0; y < 8; ++y)
+            byte[] output = new byte[tile.TileData.Length];
+            for (int y = 0; y < tile.Size; ++y)
             {
-                for (int x = 0; x < 8; ++x)
+                for (int x = 0; x < tile.Size; ++x)
                 {
-                    output[((y ^ 7) << 3) + (x ^ 7)] = tile.TileData[(y << 3) + x];
+                    output[(y ^ (tile.Size - 1)) * tile.Size + (x ^ (tile.Size - 1))] = tile.TileData[y * tile.Size + x];
                 }
             }
-            return new Tile(output);
+            return new Tile(output, tile.Size);
         }
 
-        public static Tile[] FromBitmap(byte[] bitmap, int width)
+        public static Tile[] FromBitmap(byte[] bitmap, int width, int blockWidth)
         {
-            byte[] blocks8x8 = Generic.linearToBlocks(bitmap, width);
-            Tile[] output = new Tile[blocks8x8.Length / 64];
-            byte[] currentBlock = new byte[64];
+            // FIX ME
+            int tileSize = blockWidth * blockWidth;
 
-            for (int i = 0, j = blocks8x8.Length, y = 0; i < j; i += 64, ++y)
+            byte[] blocks8x8 = Generic.linearToBlocks(bitmap, width, blockWidth);
+            Tile[] output = new Tile[blocks8x8.Length / tileSize];
+            byte[] currentBlock = new byte[tileSize];
+
+            for (int i = 0, j = blocks8x8.Length, y = 0; i < j; i += tileSize, ++y)
             {
-                for (int x = 0; x < 64; ++x)
+                for (int x = 0; x < tileSize; ++x)
                 {
                     currentBlock[x] = blocks8x8[i + x];
                 }
 
-                output[y] = new Tile(currentBlock);
+                output[y] = new Tile(currentBlock, blockWidth);
             }
 
             return output;
@@ -137,11 +146,12 @@ namespace SnesGFX.SNES
 
         public static byte[] Join(Tile[] blocks)
         {
-            byte[] output = new byte[blocks.Length * 64];
+            int size = blocks[0].TileData.Length;
+            byte[] output = new byte[blocks.Length * size];
 
-            for (int i = 0, j = blocks.Length, y = 0; i < j; ++i, y+=64)
+            for (int i = 0, j = blocks.Length, y = 0; i < j; ++i, y += size)
             {
-                for (int x = 0; x < 64; ++x)
+                for (int x = 0; x < size; ++x)
                 {
                     output[x + y] = blocks[i].TileData[x];
                 }
@@ -152,7 +162,7 @@ namespace SnesGFX.SNES
 
         public static byte[] ConvertToBitmap(Tile[] blocks, int width)
         {
-            return Generic.blocksToLinear(Join(blocks), width);
+            return Generic.blocksToLinear(Join(blocks), width, blocks[0].Size);
         }
 
         public override bool Equals(object obj)
@@ -198,7 +208,12 @@ namespace SnesGFX.SNES
         /// <returns>True if all pixels are equal, otherwise, false.</returns>
         public static bool operator ==(Tile one, Tile two)
         {
-            for (int i = 0; i < 64; ++i)
+            if (one.Size != two.Size)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < one.TileData.Length; ++i)
             {
                 if (one.TileData[i] != two.TileData[i])
                 {

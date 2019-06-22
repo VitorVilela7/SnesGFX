@@ -150,12 +150,14 @@ namespace SnesGFX.Forms
 
 					if (Options.RemoveDuplicateTiles)
 					{
+                        int baseSize = 8;
+
 						int[] tilemap;
 						bool[] flipx, flipy;
 						int theWidth = codec.FixedWidth == 0 ? Program.bitmapInfo.Width :
 							codec.FixedWidth;
 
-						SNES.Tile[] tiles = SNES.Tile.FromBitmap(result, theWidth);
+						SNES.Tile[] tiles = SNES.Tile.FromBitmap(result, theWidth, baseSize);
 						SNES.Tile[] aTiles = SNES.Tile.RemoveRepeatedBlocks(tiles, Options.RemoveFlippedTiles,
 							out tilemap, out flipx, out flipy);
 						int nTiles = aTiles.Length;
@@ -163,7 +165,7 @@ namespace SnesGFX.Forms
 						if (nTiles % 0x10 != 0) nTiles += 0x10 - nTiles % 0x10;
 						SNES.Tile[] rTiles = new SNES.Tile[nTiles];
 						aTiles.CopyTo(rTiles, 0);
-						for (int i = aTiles.Length; i < nTiles; ++i) { rTiles[i] = new SNES.Tile(new byte[64]); }
+						for (int i = aTiles.Length; i < nTiles; ++i) { rTiles[i] = new SNES.Tile(new byte[baseSize* baseSize], baseSize); }
 						result = SNES.Tile.ConvertToBitmap(rTiles, theWidth);
 
 						int x_flip_count = 0;
