@@ -5,23 +5,15 @@ namespace SnesGFX.SNES
 {
     class Tile
     {
-        private readonly byte[] tile8x8;
-
         /// <summary>
         /// Gets the pixel data of 8x8 block.
         /// </summary>
-        public byte[] TileData
-        {
-            get
-            {
-                return tile8x8;
-            }
-        }
+        public byte[] TileData { get; }
 
         public Tile(byte[] block)
         {
-            this.tile8x8 = new byte[64];
-            Array.Copy(block, tile8x8, 64);
+            this.TileData = new byte[64];
+            Array.Copy(block, TileData, 64);
         }
 
         public static Tile FlipX(Tile tile)
@@ -31,7 +23,7 @@ namespace SnesGFX.SNES
             {
                 for (int x = 0; x < 8; ++x)
                 {
-                    output[(y << 3) + (x ^ 7)] = tile.tile8x8[(y << 3) + x];
+                    output[(y << 3) + (x ^ 7)] = tile.TileData[(y << 3) + x];
                 }
             }
             return new Tile(output);
@@ -43,7 +35,7 @@ namespace SnesGFX.SNES
             {
                 for (int x = 0; x < 8; ++x)
                 {
-                    output[((y ^ 7) << 3) + x] = tile.tile8x8[(y << 3) + x];
+                    output[((y ^ 7) << 3) + x] = tile.TileData[(y << 3) + x];
                 }
             }
             return new Tile(output);
@@ -55,7 +47,7 @@ namespace SnesGFX.SNES
             {
                 for (int x = 0; x < 8; ++x)
                 {
-                    output[((y ^ 7) << 3) + (x ^ 7)] = tile.tile8x8[(y << 3) + x];
+                    output[((y ^ 7) << 3) + (x ^ 7)] = tile.TileData[(y << 3) + x];
                 }
             }
             return new Tile(output);
@@ -151,7 +143,7 @@ namespace SnesGFX.SNES
             {
                 for (int x = 0; x < 64; ++x)
                 {
-                    output[x + y] = blocks[i].tile8x8[x];
+                    output[x + y] = blocks[i].TileData[x];
                 }
             }
 
@@ -184,7 +176,7 @@ namespace SnesGFX.SNES
             int result = 0x55555555;
             int shift = 0;
 
-            foreach (int pixel in tile8x8)
+            foreach (int pixel in TileData)
             {
                 result ^= pixel << shift;
                 shift += 8;
@@ -208,7 +200,7 @@ namespace SnesGFX.SNES
         {
             for (int i = 0; i < 64; ++i)
             {
-                if (one.tile8x8[i] != two.tile8x8[i])
+                if (one.TileData[i] != two.TileData[i])
                 {
                     return false;
                 }
